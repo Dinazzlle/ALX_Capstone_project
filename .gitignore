@@ -1,0 +1,15 @@
+# Ignore the virtual environment directory
+env/
+
+# Ignore the SQLite database file
+db.sqlite3
+
+# Ignore Django migrations
+ecommerce/migrations/
+
+# Ignore Python bytecode
+*.pyc
+
+# Ignore IDE and editor-specific files
+.vscode/
+*.swp
