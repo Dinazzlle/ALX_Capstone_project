@@ -1,14 +1,14 @@
 # Django Ecommerce Project
 
-This is a simple Django ecommerce project.
+This is a simple Django e-commerce project.
 
 ## Requirements
 - Python 3.x
-- Django 5.1.4 or later
-- Virtual environment (optional but recommended)
+- Django 5.1.4 
+- Virtual environment 
 
 ## Setup Instructions
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/username/repository-name.git
+   git clone https://github.com/Dinazzlle/ALX_Capstone_project.git
