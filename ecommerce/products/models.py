@@ -13,7 +13,7 @@ class Product(models.Model):
     description = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='products')
-    stock_quantity = models.IntegerField()
+    stock_quantity = models.IntegerField(default=0)  # Ensure this field exists
     image_url = models.URLField(blank=True)
     created_date = models.DateTimeField(auto_now_add=True)
 

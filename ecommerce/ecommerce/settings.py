@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',  # Add this line
+    'ecommerce',       # Make sure your app is listed here
     'products',  # Add this line for the products app
 ]
 
