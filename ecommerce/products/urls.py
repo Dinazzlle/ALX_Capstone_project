@@ -9,8 +9,10 @@ router.register(r'categories', CategoryViewSet, basename='category')
 
 # Define urlpatterns
 urlpatterns = [
-    path('', include(router.urls)),  # Include router-generated URLs
+    path('', include(router.urls)),  # Generate routes without 'api/' prefix
     path('register/', UserRegisterView.as_view(), name='user-register'),
     path('login/', login, name='user-login'),
 ]
+
+
 

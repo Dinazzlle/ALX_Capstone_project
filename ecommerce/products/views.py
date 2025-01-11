@@ -1,3 +1,4 @@
+from rest_framework.views import APIView
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import serializers, generics, filters
 from rest_framework.viewsets import ModelViewSet
@@ -8,7 +9,14 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from django.contrib.auth.models import User
 from rest_framework_simplejwt.tokens import RefreshToken
 import django_filters  # Ensure this import is present
+from rest_framework.permissions import IsAuthenticated
 
+class LogoutView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        request.user.auth_token.delete()
+        return Response({'message': 'Logged out successfully'}, status=status.HTTP_200_OK)
 # Serializer for registering users
 class UserRegisterSerializer(serializers.ModelSerializer):
     class Meta:
@@ -46,7 +54,7 @@ class ProductFilter(django_filters.FilterSet):
 class ProductViewSet(ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
-    permission_classes = [IsAuthenticated]  # Only authenticated users can perform CRUD on products
+    permission_classes = [AllowAny]  # Anyone can perform CRUD on products
     filter_backends = (DjangoFilterBackend, filters.OrderingFilter)
     filterset_class = ProductFilter  # Set the filter class
     ordering_fields = ['name', 'price', 'stock_quantity']
@@ -57,12 +65,20 @@ class ProductViewSet(ModelViewSet):
             return super().create(request, *args, **kwargs)
         except ValidationError as e:
             return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+    def list(self, request, *args, **kwargs):
+        print("ProductViewSet list endpoint called")
+        return super().list(request, *args, **kwargs)
+
+    def get_queryset(self):
+        # Add custom filtering if needed, e.g., user-specific products
+        user = self.request.user
+        return Product.objects.filter(owner=user)  # Example: Only show products owned by the logged-in user
 
 # ViewSet for Categories
 class CategoryViewSet(ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
-    permission_classes = [IsAuthenticated]  # Require authentication to access category endpoints
+    permission_classes = [AllowAny]  # Require authentication to access category endpoints
 
 # View for user login
 @api_view(['POST'])

@@ -14,11 +14,8 @@ class ProductSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = [
-            'id', 'name', 'description', 'price', 
-            'category', 'category_id', 'stock_quantity', 
-            'image_url', 'created_date'
-        ]
+        fields ='__all__'  # Ensure all fields are included or specify the required fields explicitly
+
 
     def validate(self, data):
         if data['price'] <= 0:
